@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="login.css">
+</head> 
+<body>
+    <div>
+        <div class="register">
+        <h1>Member login</h1>
+        <p><b>Please fill in the form below to log in</b></p>
+        <hr>
+        <div data-validate = "Valid email is required: ex@abc.xyz">
+        <label for="username"><b>Email</b></label>
+        <input type="text" placeholder="Email" name="email" id="email" required>
+        </div>
+        <div data-validate = "Password is required">
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="******" name="password" id="pass" required>
+        </div>
+        <p>Forget <b><a href="#">Username/Password?</a></b></p>
+        <hr>
+        <button type="submit" class="submit" onclick="login()">Log in</button>
+        </div>
+        <div class="register login">
+        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+        <a href="index.html">Return to Gymbuddy</a>
+        </div>
+        </div>
+        </body>
+	<script>
+		function login() {
+            var i = document.getElementById("email").value;
+            var h = document.getElementById("pass").value;
+            if (i == "") {
+                alert("Vui long nhap ten!");
+                return false;
+            }
+            if (h == "") {
+                alert("Vui long nhap mat khau");
+                return false;
+            }
+
+
+            var userInfor = [];
+             userInfor=JSON.parse(localStorage.getItem(i));
+       
+            if (i == userInfor[0] && h ==userInfor[1] ) {
+                // alert("Dang nhap thanh cong");
+                // Using Replace
+                localStorage.setItem("currentuser",i)
+                window.location.href = 'index.html';
+            } else {
+                alert("Dang nhap khong thanh cong");
+                
+            }
+        }
+	</script>
+    <script src="login.js"></script>
+</body>
+</html>

@@ -14,121 +14,111 @@ const firebaseConfig = {
   // Initial Database
   const database = firebase.database();
 
-  // Get products
+  // Get info
 
-  const productsRef = database.ref('products');
-  const productList = document.querySelector('#products-list');
+  const usersRef = database.ref('members');
+  const userList = document.querySelector('#members-list');
 
-  // Create new product
+  // Create new info
   
-  const createProduct = (name, description, price, imageUrl) => {
-    const newProductRef = productsRef.push();
+  const createUser = (name, email, number, avatar) => {
+    const newUserRef = usersRef.push();
 
-    newProductRef.set({
+    newUserRef.set({
         name: name,
-        description: description,
-        price: price,
-        imageUrl: imageUrl,
+        email: email,
+        number: number,
+        avatar: avatar,
     });
 };
 
-//Edit Product
-const editProduct = (key, product) => {
-    const name = prompt('Enter new product name', product.name);
-    const description = prompt('Enter new product description', product.description);
-    const price = prompt('Enter new product price', product.price);
-    const imageUrl = prompt('Enter new product image url', product.imageUrl);
+//Edit User
+const editUser = (key, user) => {
+    const name = prompt('Enter new user name', user.name);
+    const email = prompt('Enter new user email', user.email);
+    const number = prompt('Enter new user number', user.number);
+    const avatar = prompt('Enter new user avatar url', user.avatar);
 
-    productsRef.child(key).update({
+    usersRef.child(key).update({
         name: name,
-        description: description,
-        price: price,
-        imageUrl: imageUrl,
+        email: email,
+        number: number,
+        avatar: avatar,
     });
 };
 
-// Delete product
-const deleteProduct = (key) => {
-    const confirmation = confirm('Are you sure to delete this product?');
-
+// Delete user
+const deleteUser = (key) => {
+    const confirmation = confirm("Are you sure to delete this user's information?");
     if(confirmation === true){
-        productsRef.child(key).remove();
+        usersRef.child(key).remove();
     }
 }
 
 // Handle form submit
-const form = document.querySelector('#product-form');
+const form = document.querySelector('#user-form');
 const nameInput = document.querySelector('#name');
-const descriptionInput = document.querySelector('#description');
-const priceInput = document.querySelector('#price');
-const imageUrlInput = document.querySelector('#image');
+const emailInput = document.querySelector('#email');
+const numberInput = document.querySelector('#number');
+const avatarInput = document.querySelector('#avatar');
 
 form.addEventListener('submit', (e) =>{
     e.preventDefault();
-    createProduct(nameInput.value, descriptionInput.value, priceInput.value, imageUrlInput.value);
+    createUser(nameInput.value, emailInput.value, numberInput.value, avatarInput.value);
     form.reset; // Clear form
     nameInput.value = '';
-    descriptionInput.value = '';
-    priceInput.value = '';
-    imageUrlInput.value = '';
+    emailInput.value = '';
+    numberInput.value = '';
+    avatarInput.value = '';
 });
 
-productsRef.on('child_added', (snapshot) => {
-    const product = snapshot.val();
+usersRef.on('child_added', (snapshot) => {
+    const user = snapshot.val();
     const key = snapshot.key;
     
-    // Create product element
-    const productEl = document.createElement('div');
-    productEl.classList.add('col', 'col-6');
+    // Create user element
+    const userEl = document.createElement('div');
+    userEl.classList.add('col', 'col-6');
 
-    // Create product image element
-    const productImageEl = document.createElement('img');
-    productImageEl.src = product.imageUrl;
-    productImageEl.alt = product.name;
-    productEl.appendChild(productImageEl);
+    // Create user image element
+    const userImageEl = document.createElement('img');
+    userImageEl.src = user.avatar;
+    userImageEl.alt = user.name;
+    userEl.appendChild(userImageEl);
 
-    // Create product name element
-    const productNameEl = document.createElement('h3');
-    productNameEl.textContent = product.name;
-    productEl.appendChild(productNameEl);
+    // Create user name element
+    const userNameEl = document.createElement('h3');
+    userNameEl.textContent = user.name;
+    userEl.appendChild(userNameEl);
 
-    // Create product description element
-    const productDescriptionEl = document.createElement('p');
-    productDescriptionEl.textContent = product.description;
-    productEl.appendChild(productDescriptionEl);
+    // Create user number element
+    const userNumberEl = document.createElement('p');
+    userNumberEl.textContent = user.number;
+    userEl.appendChild(userNumberEl);
 
-    // Create product price element
-    const productPriceEl = document.createElement('p');
-    productPriceEl.textContent = product.price;
-    productEl.appendChild(productPriceEl);
+    // Create user email element
+    const userEmailEl = document.createElement('p');
+    userEmailEl.textContent = user.email;
+    userEl.appendChild(userEmailEl);
 
     //Create edit and delete button element
     const editBtnElement = document.createElement('button');
     editBtnElement.textContent = 'Edit';
     editBtnElement.classList.add('edit');
     editBtnElement.addEventListener('click', () => {
-        editProduct(key, product);
+        editUser(key, user);
     });
-    productEl.appendChild(editBtnElement);
+    userEl.appendChild(editBtnElement);
 
     const deleteBtnElement = document.createElement('button');
     deleteBtnElement.textContent = 'Delete';
     deleteBtnElement.classList.add('delete');
     deleteBtnElement.addEventListener('click', () => {
-        deleteProduct(key);
+        deleteUser(key);
         location.reload();
     });
-    productEl.appendChild(deleteBtnElement);
+    userEl.appendChild(deleteBtnElement);
 
-    //Append product element to product list 
-    productList.appendChild(productEl);
+    //Append user element to user list 
+    userList.appendChild(userEl);
 });
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      console.log("User is signed in");
-    } else {
-      // User is signed out.
-      console.log("User is signed out");
-    }
-  });

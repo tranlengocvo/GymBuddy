@@ -1,56 +1,126 @@
-(function ($) {
-    "use strict";
+const firebaseConfig = {
+  apiKey: "AIzaSyB3jQ4yPgUa_qRihZuxlMa6me9Z2eZZiFw",
+  authDomain: "gym-management-project-55289.firebaseapp.com",
+  databaseURL: "https://gym-management-project-55289-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "gym-management-project-55289",
+  storageBucket: "gym-management-project-55289.appspot.com",
+  messagingSenderId: "787800355187",
+  appId: "1:787800355187:web:6645726d133202469a5506",
+  measurementId: "G-9C8EKQQ4G5"
+  };
 
-    
-    /*==================================================================
-    [ Validate ]*/
-    var input = $('.validate-input .input100');
+  firebase.initializeApp(firebaseConfig);
+  const userSignIn = (email, password) => {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(function() {
+        alert('Sign in successful');
+        window.location.href = "file:///C:/Users/tinnt/Desktop/Web%20Extensive/Gym%20Management%20Website/Product%20Management/index.html";
 
-    $('.validate-form').on('submit',function(){
-        var check = true;
+      })
+      .catch(function(error) {
+        alert(error.message)
+      })
+  }
 
-        for(var i=0; i<input.length; i++) {
-            if(validate(input[i]) == false){
-                showValidate(input[i]);
-                check=false;
-            }
+// Lớp (class) Form
+// Lớp (class) Form
+class Form {
+  constructor(id, fields, onSubmit) {
+    this.id = id;
+    this.fields = fields;
+    this.onSubmit = onSubmit;
+    this.element = document.getElementById(id);
+    this.element.addEventListener("submit", this.onSubmit);
+  }
+  getData() {
+      const data = {};
+      this.fields.forEach((field) => {
+        if (field.element) {
+          data[field.name] = field.getValue();
         }
-
-        return check;
+      });
+      return data;
+    }
+  
+    clear() {
+      this.fields.forEach((field) => {
+        if (field.element) {
+          field.setValue("");
+        }
+      });
+    }
+  
+  isValid() {
+    let isValid = true;
+    this.fields.forEach((field) => {
+      if (!field.isValid()) {
+        isValid = false;
+      }
     });
-
-
-    $('.validate-form .input100').each(function(){
-        $(this).focus(function(){
-           hideValidate(this);
+    return isValid;
+  }
+}
+// Lớp (class) Field
+class Field {
+  constructor(name, validators) {
+    this.name = name;
+    this.element = document.getElementsByName(name)[0];
+    this.validators = validators || [];
+  }
+  
+  getValue() {
+    return this.element.value;
+  }
+  
+  isValid() {
+      let isValid = true;
+      if (this.element) {
+        this.validators.forEach((validator) => {
+          if (!validator(this.getValue())) {
+            isValid = false;
+          }
         });
-    });
-
-    function validate (input) {
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-                return false;
-            }
-        }
-        else {
-            if($(input).val().trim() == ''){
-                return false;
-            }
-        }
+      }
+      return isValid;
     }
-
-    function showValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).addClass('alert-validate');
-    }
-
-    function hideValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).removeClass('alert-validate');
+  setValue(value) {
+      if (this.element) {
+        this.element.value = value;
+      }
     }
     
-    
+}
 
-})(jQuery);
+// Các hàm kiểm tra tính hợp lệ của dữ liệu
+const isRequired = (value) => {
+  return value.trim() !== "";
+};
+
+const isEmail = (value) => {
+  // Kiểm tra định dạng email bằng regular expression
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  return emailRegex.test(value);
+};
+
+const isPasswordMatched = (password, confirmPassword) => {
+  return password === confirmPassword;
+};
+// Tạo form đăng nhập
+const loginFields = [
+  new Field("email", [
+    (value) => isRequired(value),
+  ]),
+  new Field("password", [
+    (value) => isRequired(value),
+  ]),
+];
+
+const loginForm = new Form("login-form", loginFields, (event) => {
+  event.preventDefault();
+  if (loginForm.isValid()) {
+    const data = loginForm.getData();
+    userSignIn(data.email,data.password);
+    console.log(data);
+    loginForm.clear();
+  }
+});

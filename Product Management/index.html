@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,12 +8,14 @@
   <body>
     
     <main>
-      <h2>ADD MEMBER INFORMATION</h2>
+      <button id="logout" onclick="signOutFirebase()">Log out</button>
+
+      <h2>ADD TRAINER INFORMATION</h2>
       <form id="user-form">
         <label for="name">Name:</label>
         <input type="text" id="name" required>
 
-        <label for="email">Social Link:</label>
+        <label for="email">Social link:</label>
         <input type="text" type="number" textarea id="email" required></textarea>
 
         <label for="number">Description:</label>
@@ -26,12 +27,21 @@
         <button type="submit">Add</button>
       </form>
 
-      <h2>Member Information</h2>
-      <div id="members-list" class="row"></div>
+      <h2>Trainer Information</h2>
+      <div id="users-list" class="row"></div>
     </main>
-
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script src="app.js"></script>
+    <script>
+      function signOutFirebase() {
+        window.location.href = "file:///C:/Users/tinnt/Desktop/Web%20Extensive/Gym%20Management%20Website/bootstrap-restaurant-template/index.html";
+      }
+    </script>
+    <script type = "text/javascript" >  
+      function preventBack() { window.history.forward(); }  
+      setTimeout("preventBack()", 0);  
+      window.onunload = function () { null };  
+  </script> 
   </body>
 </html>

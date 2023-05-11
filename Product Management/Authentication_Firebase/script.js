@@ -134,27 +134,3 @@ const loginForm = new Form("login-form", loginFields, (event) => {
     loginForm.clear();
   }
 });
-
-// Tạo form đăng ký
-// const signupFields = [
-//   new Field("username", [(value) => isRequired(value)]),
-//   new Field("email", [(value) => isRequired(value), (value) => isEmail(value)]),
-//   new Field("password", [(value) => isRequired(value)]),
-//   new Field("confirm-password", [
-//     (value) => isRequired(value),
-//     (value) =>
-//       isPasswordMatched(value, document.getElementsByName("password")[0].value),
-//   ]),
-// ];
-
-// const signupForm = new Form("signup-form", signupFields, (event) => {
-//   event.preventDefault();
-//   if (signupForm.isValid()) {
-//     const data = signupForm.getData();
-//     console.log(data);
-//     userSignUp(data.username, data.password);
-//     signupForm.clear();
-//   }
-// });
-
-

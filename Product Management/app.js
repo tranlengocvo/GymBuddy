@@ -8,7 +8,6 @@ const firebaseConfig = {
     appId: "1:787800355187:web:6645726d133202469a5506",
     measurementId: "G-9C8EKQQ4G5"
   };
-
   firebase.initializeApp(firebaseConfig);
 
   // Initial Database
@@ -16,8 +15,8 @@ const firebaseConfig = {
 
   // Get info
 
-  const usersRef = database.ref('members');
-  const userList = document.querySelector('#members-list');
+  const usersRef = database.ref('trainers');
+  const userList = document.querySelector('#users-list');
 
   // Create new info
   
@@ -122,3 +121,22 @@ usersRef.on('child_added', (snapshot) => {
     //Append user element to user list 
     userList.appendChild(userEl);
 });
+// const renderProducts = (usersRef, one) => {
+//     const container = document.getElementById(one);
+  
+//     usersRef.on('value', (snapshot) => {
+//       container.innerHTML = ''; // clear previous content
+//       snapshot.forEach((childSnapshot) => {
+//         const userData = childSnapshot.val();
+//         const userHtml = `
+//           <div class="user">
+//             <img src="${userData.imageUrl}" alt="${userData.name}">
+//             <h3>${userData.name}</h3>
+//             <p>${userData.description}</p>
+//             <p>$${userData.price}</p>
+//           </div>
+//         `;
+//         container.insertAdjacentHTML('beforeend', userHtml);
+//       });
+//     });
+//   };

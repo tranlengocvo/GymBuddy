@@ -121,22 +121,21 @@ usersRef.on('child_added', (snapshot) => {
     //Append user element to user list 
     userList.appendChild(userEl);
 });
-// const renderProducts = (usersRef, one) => {
-//     const container = document.getElementById(one);
+const renderProducts = (usersRef, rowg4) => {
+    const container = document.getElementById(rowg4);
   
-//     usersRef.on('value', (snapshot) => {
-//       container.innerHTML = ''; // clear previous content
-//       snapshot.forEach((childSnapshot) => {
-//         const userData = childSnapshot.val();
-//         const userHtml = `
-//           <div class="user">
-//             <img src="${userData.imageUrl}" alt="${userData.name}">
-//             <h3>${userData.name}</h3>
-//             <p>${userData.description}</p>
-//             <p>$${userData.price}</p>
-//           </div>
-//         `;
-//         container.insertAdjacentHTML('beforeend', userHtml);
-//       });
-//     });
-//   };
+    usersRef.on('value', (snapshot) => {
+      container.innerHTML = ''; // clear previous content
+      snapshot.forEach((childSnapshot) => {
+        const userData = childSnapshot.val();
+        const userHtml = `
+          <div class="user">
+            <img src="${userData.avatar}" alt="${userData.name}">
+            <h5>${userData.name}</h5>
+            <small>$${userData.number}</small>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', userHtml);
+      });
+    });
+  };

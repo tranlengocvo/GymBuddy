@@ -1,1 +1,1 @@
-# gymbuddyadvance
+# GymBuddy

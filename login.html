@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="login.css">
+</head> 
+<body>
+    <div>
+        <form id="login-form">
+        <div class="register">
+        <h1>Staff login</h1>
+        <p><b>Please fill in the form below to log in</b></p>
+        <hr>
+        <div data-validate = "Valid email is required: ex@abc.xyz">
+        <label for="username"><b>Email</b></label>
+        <input type="text" placeholder="Email" name="email" id="email" required>
+        </div>
+        <div data-validate = "Password is required">
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="******" name="password" id="password" required>
+        </div>
+        <p>Forget <b><a href="#">Username/Password?</a></b></p>
+        <hr>
+        <button type="submit" class="submit">Log in</button>
+        </div>
+        <div class="register login">
+        <a href="index.html">Return to Gymbuddy</a>
+        </div>
+        </form>
+        </div>
+        </body>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+        <script src="login.js"></script>
+</body>
+</html>
